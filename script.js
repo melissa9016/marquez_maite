@@ -11,7 +11,7 @@ const L = [
   ["consecuencias", "Consecuencias"],
 ];
 
-// ---------- Navegación (marca la página actual) y pie de página ----------
+
 const pagina = (location.pathname.split("/").pop() || "index").replace(
   /\.html$/,
   "",
@@ -33,7 +33,7 @@ document.body.insertAdjacentHTML(
     "<small>Imágenes: archivos del proyecto y, cuando faltan, Wikipedia / Wikimedia Commons</small></footer>",
 );
 
-// ---------- Imágenes: primero las locales, si no existen se buscan en Wikipedia ----------
+
 const slug = (s) => s.toLowerCase().trim().replace(/ /g, "_");
 
 // Comprueba si una imagen carga bien
@@ -45,15 +45,14 @@ const probe = (u) =>
     i.src = u;
   });
 
-// Consulta a la API de Wikipedia y devuelve la URL de una miniatura (o null)
+
 const norm = (s) =>
   s
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
     .toLowerCase();
 
-// En las búsquedas, el título encontrado debe contener todas las palabras importantes
-// (así "Operación Mincemeat" no devuelve un postre ni "Juliusz Schauder" una ciudad)
+
 const coincide = (titulo, consulta) =>
   norm(consulta)
     .split(/[^a-z0-9]+/)
@@ -86,7 +85,7 @@ async function wiki(lang, params, exige) {
   }
 }
 
-// Si el artículo no tiene imagen principal, toma una de las fotos que aparecen en él
+
 async function imagenesArticulo(lang, titulo, ancho) {
   const api = (p) =>
     `https://${lang}.wikipedia.org/w/api.php?` +
@@ -125,7 +124,7 @@ async function imagenesArticulo(lang, titulo, ancho) {
   return null;
 }
 
-// Busca la imagen de un tema (con caché en el navegador para no repetir consultas)
+
 async function imagenWeb(titulo, ancho) {
   const clave = `wimg3:${ancho}:${titulo}`;
   try {
@@ -133,7 +132,7 @@ async function imagenWeb(titulo, ancho) {
     if (c !== null) return c || null;
   } catch (e) {}
   const t = String(ancho);
-  // "en:Título" o "es:Título" fuerza un solo idioma y un artículo exacto (sin búsqueda)
+
   const m = titulo.match(/^(es|en):(.+)$/);
   const idiomas = m ? [m[1]] : ["es", "en"];
   const tema = m ? m[2] : titulo;
@@ -163,7 +162,7 @@ async function imagenWeb(titulo, ancho) {
   return u;
 }
 
-// Devuelve la mejor imagen disponible: local (jpg/jpeg/png) o de Wikipedia
+
 async function mejorImagen(nombre, carpeta, ancho, buscar) {
   const base = nombre.replace(/^(es|en):/, "");
   for (const ext of ["jpg", "jpeg", "png"]) {
@@ -174,7 +173,7 @@ async function mejorImagen(nombre, carpeta, ancho, buscar) {
   return web && (await probe(web)) ? web : null;
 }
 
-// Fondos de portada y bandas
+
 const FONDO = "linear-gradient(180deg,#1a100c88,#1a100ccc)";
 document.querySelectorAll("[data-bg]").forEach(async (e) => {
   e.style.backgroundImage = FONDO;
@@ -182,12 +181,12 @@ document.querySelectorAll("[data-bg]").forEach(async (e) => {
   if (u) e.style.backgroundImage = `${FONDO}, url("${u}")`;
 });
 
-// Fotos de las tarjetas (se cargan al acercarse a ellas)
+
 async function cargarFoto(c) {
   const h = c.querySelector("h4");
   const nombre = c.dataset.w || (h && h.textContent.trim());
   if (!nombre) return;
-  // data-img (opcional): tema de Wikipedia a buscar cuando el de data-w no da buena foto
+
   const u = await mejorImagen(nombre, "tarjetas", 700, c.dataset.img);
   if (!u) return;
   const i = new Image();
@@ -210,7 +209,7 @@ const fio = new IntersectionObserver(
 );
 document.querySelectorAll(".p, .c[data-w]").forEach((e) => fio.observe(e));
 
-// Ampliar foto al hacer clic
+
 document.body.insertAdjacentHTML(
   "beforeend",
   '<div id="lb"><img alt=""><span></span></div>',
@@ -225,14 +224,14 @@ document.addEventListener("click", (e) => {
 });
 addEventListener("keydown", (e) => e.key === "Escape" && lb.classList.remove("on"));
 
-// ---------- Aparición de tarjetas ----------
+
 const io = new IntersectionObserver(
   (a) => a.forEach((x) => x.isIntersecting && x.target.classList.add("v")),
   { threshold: 0.1 },
 );
 document.querySelectorAll(".c,.p").forEach((e) => io.observe(e));
 
-// ---------- Efecto parallax y barra de progreso ----------
+
 addEventListener("scroll", () => {
   document.querySelectorAll(".px").forEach((e) => {
     const y = -e.getBoundingClientRect().top,
@@ -247,7 +246,7 @@ addEventListener("scroll", () => {
     (scrollY / Math.max(1, h.scrollHeight - innerHeight)) * 100 + "%";
 });
 
-// ---------- Buscador ----------
+
 const q = document.getElementById("q"),
   n = (s) =>
     s
@@ -262,7 +261,7 @@ if (q)
       .forEach((e) =>
         e.classList.toggle("o", !n(e.textContent).includes(n(q.value))),
       );
-    // oculta los grupos que se quedan sin resultados
+  
     document.querySelectorAll("main section").forEach((s) => {
       const k = s.querySelectorAll(".c,.p");
       if (k.length)
@@ -273,7 +272,7 @@ if (q)
     });
   });
 
-// ---------- Galería 3D (sin cambios) ----------
+-
 const r = document.getElementById("ring");
 if (r) {
   let a = 0,
@@ -298,7 +297,7 @@ if (r) {
     p.innerHTML = "<b>" + item.titulo + "</b>";
     
     
-    p.style.backgroundImage = `url(img/galeria3d/${item.archivo})`;
+    p.style.backgroundImage = `url(galeria3d/${item.archivo})`;
     r.append(p);
   });
 
