@@ -1,0 +1,379 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap");
+
+:root {
+  --bg: #241a15;
+  --gold: #f0d9a8;
+  --gold2: #d1a95b;
+  --red: #7a1f2d;
+  --txt: #f5ecdd;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    1100px 560px at 50% -5%,
+    #4a3328 0%,
+    transparent 70%
+  );
+  background-repeat: no-repeat;
+  color: var(--txt);
+  font:
+    17px/1.7 Lora,
+    Georgia,
+    serif;
+  overflow-x: hidden;
+}
+
+/* ---------- Navegación ---------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  display: flex;
+  justify-content: safe center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 10px 14px;
+  background: #6d1b28e6;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #f0d9a844;
+  box-shadow: 0 4px 20px #0006;
+}
+nav a {
+  color: var(--gold);
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  transition: 0.25s;
+}
+nav a:hover {
+  background: #f0d9a825;
+}
+nav a.on {
+  background: var(--gold);
+  color: #4a1018;
+  font-weight: 600;
+}
+#bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 20;
+  background: linear-gradient(90deg, var(--gold2), var(--gold));
+}
+
+/* ---------- Títulos ---------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  color: var(--gold);
+  margin: 0.3em 0;
+  line-height: 1.2;
+}
+h3 {
+  border-bottom: 1px solid #f0d9a833;
+  padding-bottom: 6px;
+  margin-top: 1.5em;
+  font-size: 1.5rem;
+}
+main > h2 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 2rem;
+  margin-top: 1.4em;
+}
+main > h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold2), transparent);
+}
+
+/* ---------- Portadas y bandas con imagen ---------- */
+.px {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  background: #5a4638 center/cover fixed;
+}
+.px:not(.band)::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 110px;
+  background: linear-gradient(transparent, var(--bg));
+  pointer-events: none;
+}
+.px.big {
+  min-height: 90vh;
+}
+.px h1 {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 800;
+}
+.px h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+}
+.px.big > p {
+  font-size: 1.3rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  margin: 0.4em 0 0.8em;
+}
+.px h1,
+.px h2,
+.px h3,
+.px > p {
+  text-shadow: 0 2px 14px #000;
+}
+.band {
+  width: 100vw;
+  margin: 40px 0 40px calc(50% - 50vw);
+  min-height: 50vh;
+}
+.band h3 {
+  border: 0;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+input {
+  width: 85%;
+  max-width: 460px;
+  padding: 12px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 30px;
+  background: #2b221cdd;
+  color: var(--txt);
+  margin-top: 14px;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.25s;
+}
+input:focus {
+  box-shadow: 0 0 0 4px #f0d9a838;
+  background: #2b221c;
+}
+
+/* ---------- Contenido ---------- */
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 20px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 22px;
+}
+main > * {
+  grid-column: 1 / -1;
+}
+main > .c,
+main > .p {
+  grid-column: auto;
+}
+main > p {
+  text-align: center;
+  color: #cdbfa8;
+  font-style: italic;
+  margin: 0;
+}
+section:has(> .p) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 22px;
+  margin-bottom: 18px;
+}
+section:has(> .p) > h3 {
+  grid-column: 1 / -1;
+}
+.g {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+/* ---------- Tarjetas ---------- */
+.c,
+.p {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #4f4036, #3a2d25);
+  border: 1px solid #f0d9a822;
+  border-left: 4px solid var(--gold2);
+  border-radius: 14px;
+  padding: 16px 20px 18px;
+  margin: 0;
+  box-shadow: 0 6px 18px #0004;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s,
+    transform 0.7s,
+    box-shadow 0.3s,
+    border-color 0.3s;
+}
+.c.v,
+.p.v {
+  opacity: 1;
+  transform: none;
+}
+.c.v:hover,
+.p.v:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px #0008;
+  border-left-color: var(--gold);
+}
+.c h4,
+.p h4 {
+  font-size: 1.2rem;
+  margin: 0 0 0.35em;
+}
+.c p,
+.p p {
+  margin: 0;
+  color: #eadfca;
+  font-size: 0.97rem;
+}
+.c a {
+  color: var(--gold);
+  font-weight: 600;
+}
+.foto {
+  display: block;
+  width: calc(100% + 40px);
+  height: 190px;
+  margin: -16px -20px 14px;
+  object-fit: cover;
+  object-position: center 20%;
+  cursor: zoom-in;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 0.7s,
+    transform 0.7s;
+}
+.foto.ok {
+  opacity: 1;
+  transform: none;
+}
+.c:hover .foto.ok,
+.p:hover .foto.ok {
+  transform: scale(1.05);
+}
+.o {
+  display: none !important;
+}
+
+/* ---------- Ampliar foto ---------- */
+#lb {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #000d;
+  cursor: zoom-out;
+}
+#lb.on {
+  display: flex;
+}
+#lb img {
+  max-width: 92vw;
+  max-height: 82vh;
+  border: 3px solid var(--gold);
+  border-radius: 6px;
+  box-shadow: 0 10px 50px #000;
+}
+#lb span {
+  color: var(--gold);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+/* ---------- Galería 3D (sin cambios) ---------- */
+#r3 {
+  height: 380px;
+  perspective: 1000px;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+#ring {
+  width: 190px;
+  height: 250px;
+  margin: 60px auto;
+  position: relative;
+  transform-style: preserve-3d;
+}
+#ring div {
+  position: absolute;
+  inset: 0;
+  background: #5a4638 center/cover;
+  border: 3px solid #f0d9a8;
+  box-shadow: 0 8px 25px #0008;
+  display: flex;
+  align-items: flex-end;
+}
+#ring b {
+  background: #000b;
+  width: 100%;
+  padding: 4px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ---------- Pie de página ---------- */
+footer {
+  text-align: center;
+  padding: 26px 20px;
+  font-size: 0.85rem;
+  background: #1c1410;
+  border-top: 1px solid #f0d9a833;
+  color: #cdbfa8;
+}
+footer small {
+  opacity: 0.7;
+}
+
+/* ---------- Móvil y accesibilidad ---------- */
+@media (max-width: 800px) {
+  .px {
+    background-attachment: scroll;
+  }
+  main {
+    padding: 20px 14px 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .c,
+  .p,
+  .foto {
+    transition: none;
+  }
+}
